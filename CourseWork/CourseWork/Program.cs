@@ -1,4 +1,7 @@
 
+using CourseWork.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace CourseWork
 {
     public class Program
@@ -8,6 +11,11 @@ namespace CourseWork
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(
+                    builder.Configuration.GetConnectionString("DefaultConnection"),
+                    npgsql => npgsql.UseNetTopologySuite()));
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
