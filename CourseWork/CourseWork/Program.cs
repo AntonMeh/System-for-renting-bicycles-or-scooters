@@ -1,5 +1,6 @@
 
 using CourseWork.Data;
+using CourseWork.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseWork
@@ -16,6 +17,8 @@ namespace CourseWork
                 options.UseNpgsql(
                     builder.Configuration.GetConnectionString("DefaultConnection"),
                     npgsql => npgsql.UseNetTopologySuite()));
+
+            builder.Services.AddScoped<RentalService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

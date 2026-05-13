@@ -29,6 +29,8 @@ namespace CourseWork.Data
                 .WithMany(rp => rp.RentalsEndedHere)
                 .HasForeignKey(r => r.EndRentalPointId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            SeedData.Seed(modelBuilder);
         }
     }
 }
