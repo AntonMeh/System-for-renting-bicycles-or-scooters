@@ -1,0 +1,54 @@
+@page
+@model CourseWork.Pages.VehiclesModel
+@{
+    ViewData["Title"] = "Транспорт";
+}
+
+<h1 class="display-6 fw-bold mb-4"><i class="bi bi-bicycle text-primary"></i> Доступний транспорт</h1>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info">
+        @Model.Message
+    </div>
+}
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="ps-4">Категорія</th>
+                    <th>Модель</th>
+                    <th>Заряд</th>
+                    <th>Точка прокату</th>
+                    <th class="pe-4 text-end">Дія</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var v in Model.AvailableVehicles)
+                {
+                    <tr>
+                        <td class="ps-4">
+                            @if(v.VehicleType.Category == "Самокат") { <span class="badge bg-primary rounded-pill"><i class="bi bi-scooter"></i> Самокат</span> }
+                            else { <span class="badge bg-success rounded-pill"><i class="bi bi-bicycle"></i> Велосипед</span> }
+                        </td>
+                        <td class="fw-bold">@v.VehicleType.Name</td>
+                        <td>
+                            @if(v.BatteryLevel > 50) { <span class="text-success fw-bold"><i class="bi bi-battery-full"></i> @v.BatteryLevel%</span> }
+                            else { <span class="text-danger fw-bold"><i class="bi bi-battery-half"></i> @v.BatteryLevel%</span> }
+                        </td>
+                        <td class="text-muted"><i class="bi bi-geo-alt"></i> @(v.RentalPoint?.Name ?? "На вулиці")</td>
+                        <td class="pe-4 text-end">
+                            <form method="post" asp-page-handler="StartRental" class="d-inline">
+                                <input type="hidden" name="vehicleId" value="@v.Id" />
+                                <input type="hidden" name="clientId" value="1" />
+                                <button type="submit" class="btn btn-sm btn-primary px-3 shadow-sm rounded-pill">Орендувати</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

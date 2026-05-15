@@ -21,6 +21,7 @@ namespace CourseWork
             builder.Services.AddScoped<RentalService>();
 
             builder.Services.AddControllers();
+            builder.Services.AddRazorPages();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -33,11 +34,12 @@ namespace CourseWork
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
-
             app.MapControllers();
+            app.MapRazorPages();
 
             app.Run();
         }
